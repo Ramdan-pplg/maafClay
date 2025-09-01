@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sebuah Pesan Untukmu...</title>
+    <!-- Menggunakan Tailwind CSS untuk styling yang cepat dan modern -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Menggunakan Google Fonts untuk tampilan teks yang lebih menarik -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Pacifico&display=swap" rel="stylesheet">
+    <style>
+        /* Menambahkan font custom */
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .font-pacifico {
+            font-family: 'Pacifico', cursive;
+        }
+        /* Animasi confetti sederhana */
+        @keyframes fall {
+            0% { transform: translateY(-100px) rotateZ(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotateZ(360deg); opacity: 0; }
+        }
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            animation: fall 5s linear infinite;
+            top: -20px;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen p-4">
+
+    <div class="w-full max-w-md">
+        <!-- Kartu Permintaan Maaf (Awal) -->
+        <div id="apology-card" class="bg-white p-8 rounded-2xl shadow-2xl text-center transition-opacity duration-700">
+            <h1 class="font-pacifico text-4xl text-gray-800 mb-4">Maafin aku ya...</h1>
+            <img src="https://placehold.co/400x250/F8C4B4/333333?text=Aku+Salah" alt="Gambar kucing sedih sebagai permintaan maaf" class="mx-auto rounded-lg mb-6 shadow-md">
+            <p class="text-gray-600 mb-8 text-lg">
+                Aku tahu aku sudah buat salah dan aku benar-benar minta maaf. Itu semua Kesalahan Ku . Kamu jadi kena imbasnya. Semoga kamu mau memaafkanku.
+            </p>
+            <button id="forgive-button" class="bg-pink-500 text-white font-bold py-3 px-8 rounded-full shadow-lg hover:bg-pink-600 transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-pink-300">
+                Kalau kamu maafin aku, klik ini
+            </button>
+        </div>
+
+        <!-- Kartu Terima Kasih (Tersembunyi) -->
+        <div id="thank-you-card" class="bg-white p-8 rounded-2xl shadow-2xl text-center hidden relative overflow-hidden">
+            <div id="confetti-container"></div>
+            <h1 class="font-pacifico text-4xl text-green-500 mb-4">Makasih Banyak!</h1>
+            <img src="https://placehold.co/400x250/A2E4B8/333333?text=Yeay!" alt="Gambar hati sebagai tanda terima kasih" class="mx-auto rounded-lg mb-6 shadow-md">
+            <p class="text-gray-700 text-lg">
+                Kamu memang teman terbaik! Jangan marah lagi ya. Sebagai gantinya, aku traktir kopi/jajan deh kapan-kapan!
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Mengambil elemen dari HTML
+        const forgiveButton = document.getElementById('forgive-button');
+        const apologyCard = document.getElementById('apology-card');
+        const thankYouCard = document.getElementById('thank-you-card');
+        const confettiContainer = document.getElementById('confetti-container');
+
+        // Fungsi untuk membuat satu keping confetti
+        function createConfettiPiece() {
+            const confetti = document.createElement('div');
+            confetti.classList.add('confetti');
+            
+            // Warna-warni confetti
+            const colors = ['#ef4444', '#f97316', '#eab308', '#84cc16', '#22c55e', '#14b8a6', '#06b6d4', '#3b82f6', '#8b5cf6', '#d946ef'];
+            confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+            
+            // Posisi horizontal acak
+            confetti.style.left = Math.random() * 100 + '%';
+            
+            // Durasi dan delay animasi acak agar terlihat natural
+            confetti.style.animationDuration = (Math.random() * 3) + 2 + 's'; // antara 2-5 detik
+            confetti.style.animationDelay = Math.random() * 2 + 's'; // delay hingga 2 detik
+            
+            confettiContainer.appendChild(confetti);
+
+            // Hapus confetti setelah animasi selesai agar tidak membebani halaman
+            setTimeout(() => {
+                confetti.remove();
+            }, 5000);
+        }
+
+        // Event listener untuk tombol
+        forgiveButton.addEventListener('click', () => {
+            // Sembunyikan kartu permintaan maaf
+            apologyCard.classList.add('hidden');
+            
+            // Tampilkan kartu terima kasih
+            thankYouCard.classList.remove('hidden');
+
+            // Hujan confetti!
+            for (let i = 0; i < 50; i++) {
+                createConfettiPiece();
+            }
+        });
+    </script>
+
+</body>
+</html>
